@@ -1,0 +1,112 @@
+<mat-toolbar color="primary" style="display: flex;">
+  <button mat-icon-button class="example-icon" routerLink="/users" style="flex: 0 0 50%; text-align: left"
+          aria-label="Example icon-button with menu icon">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <span>{{isUpdate ? 'Update User' : 'Create User'}}</span>
+</mat-toolbar>
+
+<div [formGroup]="userForm">
+  <div class="form">
+    <mat-form-field class="example-full-width mb-3" appearance="outline">
+      <mat-label>first_name</mat-label>
+      <input matInput formControlName="first_name" required>
+      <mat-error *ngIf="userForm.controls.first_name?.errors?.required">
+        first_name is required
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width mb-3" appearance="outline">
+      <mat-label>last_name</mat-label>
+      <input matInput formControlName="last_name" required>
+      <mat-error *ngIf="userForm.controls.last_name?.errors?.required">
+        last_name is required
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width mb-3" appearance="outline">
+      <mat-label>email</mat-label>
+      <input matInput formControlName="email" required>
+      <mat-error *ngIf="userForm.controls.email?.errors?.required">
+        email is required
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width mb-3" appearance="outline">
+      <mat-label>personal_id</mat-label>
+      <input matInput formControlName="personal_id" required>
+      <mat-error *ngIf="userForm.controls.personal_id?.errors?.required">
+        personal_id is required
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width mb-3" appearance="outline">
+      <mat-label>phone</mat-label>
+      <ngx-mat-intl-tel-input
+        [preferredCountries]="['ae', 'sa']"
+        [enablePlaceholder]="true"
+        [enableSearch]="true"
+        name="phone"
+        formControlName="phone"></ngx-mat-intl-tel-input>
+      <mat-error *ngIf="userForm.controls.phone?.errors?.required">
+        phone is required
+      </mat-error>
+    </mat-form-field>
+    <ng-container formGroupName="address" class="form">
+      <mat-form-field class="example-full-width mb-3" appearance="outline">
+        <mat-label>country</mat-label>
+        <input matInput formControlName="country" required>
+        <mat-error *ngIf="userForm.controls.country?.errors?.required">
+          country is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="example-full-width mb-3" appearance="outline">
+        <mat-label>city</mat-label>
+        <input matInput formControlName="city" required>
+        <mat-error *ngIf="userForm.controls.city?.errors?.required">
+          city is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="example-full-width mb-3" appearance="outline">
+        <mat-label>street</mat-label>
+        <input matInput formControlName="street" required>
+        <mat-error *ngIf="userForm.controls.street?.errors?.required">
+          street is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="example-full-width mb-3" appearance="outline">
+        <mat-label>zip_code</mat-label>
+        <input matInput formControlName="zip_code" required>
+        <mat-error *ngIf="userForm.controls.zip_code?.errors?.required">
+          zip_code is required
+        </mat-error>
+      </mat-form-field>
+
+    </ng-container>
+    <mat-radio-group aria-label="Select sex" formControlName="sex" class="p-10">
+      <mat-radio-button class="p-10" value="male">male</mat-radio-button>
+      <mat-radio-button class="p-10" value="female">female</mat-radio-button>
+    </mat-radio-group>
+
+  </div>
+  <div style="padding-left: 30px">
+    <button mat-button mat-flat-button color="primary" (click)="addAccounts()">Add Accounts</button>
+    <div formArrayName="accounts" class="form" style="flex-direction: column">
+      <ng-container *ngFor="let account of getAccounts(); let i = index">
+        <ng-container [formGroupName]="i">
+
+          <mat-form-field class="example-full-width mb-3" appearance="outline">
+            <mat-label>account_number</mat-label>
+            <input matInput formControlName="account_number" required>
+            <mat-error *ngIf="userForm.controls.account_number?.errors?.required">
+              account_number is required
+            </mat-error>
+          </mat-form-field>
+        </ng-container>
+        <hr>
+      </ng-container>
+    </div>
+
+  </div>
+
+  <div style="text-align: center">
+    <button mat-button mat-raised-button color="primary"
+            (click)="submit()">{{isUpdate ? 'update user' : 'add user'}}</button>
+  </div>
+</div>

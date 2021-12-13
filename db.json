@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "first_name": "mahmoud",
+      "last_name": "tarek",
+      "email": "mahmoudtarek9@gmail.com",
+      "sex": "male",
+      "personal_id": "123456789",
+      "profile_img": "https://via.placeholder.com/350x150",
+      "phone": "+201120745797",
+      "accounts": [
+        {
+          "account_number": "10000023123"
+        },
+        {
+          "account_number": "12310000001"
+        }
+      ],
+      "address": {
+        "country": "Egypt",
+        "city": "Cairo",
+        "street": "Haram",
+        "zip_code": "22222"
+      },
+      "id": 1
+    }
+  ]
+}

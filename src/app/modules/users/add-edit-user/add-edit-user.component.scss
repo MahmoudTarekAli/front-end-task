@@ -1,0 +1,16 @@
+.form {
+  display: flex;
+  flex-flow: wrap;
+  grid-gap: 15px;
+  flex-direction: row;
+  justify-content: left;
+  padding: 30px;
+}
+
+.example-full-width {
+  width: 30%;
+}
+
+.p-10{
+  padding: 10px;
+}
