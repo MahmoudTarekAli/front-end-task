@@ -29,11 +29,18 @@ export class UsersComponent implements OnInit, AfterViewInit {
       this.pageIndex = params['page'];
       this.searchValue = params['search'];
     });
-    this.getUsers()
+    this.dataSource = new MatTableDataSource(this.activatedRoute.snapshot.data.userData.body);
+
   }
 
   getUsers() {
-    this.dataSource = new MatTableDataSource(this.activatedRoute.snapshot.data.userData.body);
+    this.userService.getUsers().subscribe(data => {
+      this.dataSource = new MatTableDataSource(data.body);
+      this.dataSource.paginator = this.paginator;
+      this.paginator.pageIndex = this.pageIndex;
+      this.dataSource.filter = this.searchValue;
+      this.dataSource.sort = this.sort;
+    })
   }
 
   ngAfterViewInit(): void {
@@ -66,8 +73,11 @@ export class UsersComponent implements OnInit, AfterViewInit {
 
   deleteUser(element: any) {
     this.userService.deleteUser(element.id).subscribe(data => {
-      console.log(data);
-      this.getUsers()
+      if (data.status === 200) {
+        this.getUsers()
+      }
+    }, error => {
+      window.alert(error)
     })
   }
 }

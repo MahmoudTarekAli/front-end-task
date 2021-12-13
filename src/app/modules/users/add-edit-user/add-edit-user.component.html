@@ -32,8 +32,9 @@
       <mat-label>personal_id</mat-label>
       <input matInput formControlName="personal_id" required>
       <mat-error *ngIf="userForm.controls.personal_id?.errors?.required">
-        personal_id is required
+        personal_id is required please enter valid id
       </mat-error>
+
     </mat-form-field>
     <mat-form-field class="example-full-width mb-3" appearance="outline">
       <mat-label>phone</mat-label>
@@ -89,14 +90,18 @@
     <div formArrayName="accounts" class="form" style="flex-direction: column; padding-left: 0">
       <ng-container *ngFor="let account of getAccounts(); let i = index">
         <ng-container [formGroupName]="i">
-
-          <mat-form-field class="example-full-width mb-3" appearance="outline">
-            <mat-label>account_number</mat-label>
-            <input matInput formControlName="account_number" required>
-            <mat-error *ngIf="userForm.controls.account_number?.errors?.required">
-              account_number is required
-            </mat-error>
-          </mat-form-field>
+          <div style="display: flex;">
+            <mat-form-field class="example-full-width mb-3" appearance="outline">
+              <mat-label>account_number</mat-label>
+              <input matInput formControlName="account_number" required>
+              <mat-error *ngIf="userForm.controls.account_number?.errors?.required">
+                account_number is required
+              </mat-error>
+            </mat-form-field>
+            <button mat-icon-button (click)="remove(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
         </ng-container>
         <hr>
       </ng-container>
@@ -106,6 +111,6 @@
 
   <div style="text-align: center; padding: 20px">
     <button mat-button mat-raised-button color="primary"
-            (click)="submit()">{{isUpdate ? 'update user' : 'add user'}}</button>
+            [disabled]="userForm.invalid" (click)="submit()">{{isUpdate ? 'update user' : 'add user'}}</button>
   </div>
 </div>

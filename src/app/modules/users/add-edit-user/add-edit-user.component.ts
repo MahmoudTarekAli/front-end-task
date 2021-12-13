@@ -1,20 +1,23 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {Subject} from "rxjs";
+import {takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-add-edit-user',
   templateUrl: './add-edit-user.component.html',
   styleUrls: ['./add-edit-user.component.scss']
 })
-export class AddEditUserComponent implements OnInit {
+export class AddEditUserComponent implements OnInit, OnDestroy {
   control: any;
   // @ts-ignore
   userForm: FormGroup;
   user: any;
   // @ts-ignore
   isUpdate: boolean;
+  destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(private fb: FormBuilder, private userService: UserService, private router: Router, private activatedRoute: ActivatedRoute) {
 
@@ -39,11 +42,10 @@ export class AddEditUserComponent implements OnInit {
     });
     if (this.activatedRoute.snapshot.params.id) {
       this.isUpdate = true;
-      this.userService.getUser(this.activatedRoute.snapshot.params.id).subscribe(data => {
+      this.userService.getUser(this.activatedRoute.snapshot.params.id).pipe(takeUntil(this.destroy$)).subscribe(data => {
         this.user = data;
         this.addAccounts();
         this.userForm.patchValue(data.body);
-        console.log(data)
       })
     } else {
       this.isUpdate = false
@@ -65,14 +67,14 @@ export class AddEditUserComponent implements OnInit {
 
   submit() {
     if (!this.isUpdate) {
-      this.userService.addUser(this.userForm.value).subscribe(data => {
+      this.userService.addUser(this.userForm.value).pipe(takeUntil(this.destroy$)).subscribe(data => {
         this.router.navigateByUrl('/users');
         window.alert('user added successfully')
       }, error => {
         window.alert(error)
       });
     } else {
-      this.userService.updateUser(this.userForm.value, this.activatedRoute.snapshot.params.id).subscribe(data => {
+      this.userService.updateUser(this.userForm.value, this.activatedRoute.snapshot.params.id).pipe(takeUntil(this.destroy$)).subscribe(data => {
         this.router.navigateByUrl('/users');
         window.alert('user updated successfully')
       }, error => {
@@ -81,4 +83,12 @@ export class AddEditUserComponent implements OnInit {
     }
   }
 
+  remove(i: number) {
+    this.control.removeAt(i)
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }

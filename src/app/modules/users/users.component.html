@@ -4,7 +4,7 @@
   <div class="example-sidenav-content">
     <mat-toolbar color="primary" style="display: flex; justify-content: space-between">
       <span>Bank Control Panel</span>
-      <button mat-icon-button class="example-icon" routerLink="/add-user"
+      <button mat-icon-button class="example-icon" routerLink="./add-user"
               aria-label="Example icon-button with menu icon">
         <mat-icon>add</mat-icon>
       </button>
@@ -76,7 +76,7 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> actions</th>
       <td *matCellDef="let element; let i=index;" class="pr-0">
-        <button mat-icon-button [routerLink]="['/update-user', element.id]">
+        <button mat-icon-button [routerLink]="['./update-user', element.id]">
           <mat-icon>edit</mat-icon>
         </button>
         <button mat-icon-button (click)="deleteUser(element)">
