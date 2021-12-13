@@ -1,15 +1,8 @@
 <mat-drawer-container class="example-container" autosize>
-  <mat-drawer #drawer class="example-sidenav" mode="over">
-    <p>Users</p>
 
-  </mat-drawer>
 
   <div class="example-sidenav-content">
     <mat-toolbar color="primary" style="display: flex; justify-content: space-between">
-      <button (click)="drawer.toggle()" mat-icon-button class="example-icon"
-              aria-label="Example icon-button with menu icon">
-        <mat-icon>menu</mat-icon>
-      </button>
       <span>Bank Control Panel</span>
       <button mat-icon-button class="example-icon" routerLink="/add-user"
               aria-label="Example icon-button with menu icon">

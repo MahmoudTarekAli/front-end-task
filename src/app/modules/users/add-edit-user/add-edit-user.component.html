@@ -1,6 +1,5 @@
 <mat-toolbar color="primary" style="display: flex;">
-  <button mat-icon-button class="example-icon" routerLink="/users" style="flex: 0 0 50%; text-align: left"
-          aria-label="Example icon-button with menu icon">
+  <button mat-icon-button routerLink="/users">
     <mat-icon>arrow_back</mat-icon>
   </button>
   <span>{{isUpdate ? 'Update User' : 'Create User'}}</span>
@@ -87,7 +86,7 @@
   </div>
   <div style="padding-left: 30px">
     <button mat-button mat-flat-button color="primary" (click)="addAccounts()">Add Accounts</button>
-    <div formArrayName="accounts" class="form" style="flex-direction: column">
+    <div formArrayName="accounts" class="form" style="flex-direction: column; padding-left: 0">
       <ng-container *ngFor="let account of getAccounts(); let i = index">
         <ng-container [formGroupName]="i">
 
@@ -105,7 +104,7 @@
 
   </div>
 
-  <div style="text-align: center">
+  <div style="text-align: center; padding: 20px">
     <button mat-button mat-raised-button color="primary"
             (click)="submit()">{{isUpdate ? 'update user' : 'add user'}}</button>
   </div>
